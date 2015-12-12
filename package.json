@@ -4,12 +4,19 @@
   "description": "User interface for 6element sensors",
   "main": "./js/server/main.js",
   "scripts": {
-    "prepublish": "node_modules/gulp/bin/gulp.js build-prod",
-    "build-dev": "node_modules/gulp/bin/gulp.js build-dev",
-    "build-prod": "node_modules/gulp/bin/gulp.js build-prod",
-    "watch": "node_modules/gulp/bin/gulp.js watch",
-    "start": "nodemon example.js",
+    "preversion": "npm-run-all build test",
+    "build": "npm-run-all --parallel 'build:*'",
+    "build:shared": "browserify -e ./js/client/main.js -o browserify-bundle.js",
+    "build:source": "tsc --noImplicitAny -t ES5 -m commonjs --rootDir ./ts --outDir ./js",
+    "watch": "npm-run-all --parallel 'watch:*' start:watch",
+    "watch:shared": "watchify -dv --full-paths -e ./js/client/main.js -o browserify-bundle.js",
+    "watch:source": "npm run build:source -- --watch --sourceMap",
+    "start": "node src/server/main.js",
+    "start:watch": "nodemon src/server/main.js",
     "test": "mocha --recursive tests/js/mocha/"
+  },
+  "engines": {
+    "node": "4.x"
   },
   "repository": {
     "type": "git",
@@ -31,13 +38,10 @@
   "homepage": "https://github.com/anthill/6bin",
   "dependencies": {
     "body-parser": "^1.14.1",
-    "browserify": "^11.2.0",
     "compression": "^1.6.0",
-    "es6-shim": "^0.33.6",
     "express": "^4.13.3",
     "immutable": "^3.7.5",
     "keymirror": "^0.1.1",
-    "minifyify": "^7.1.0",
     "react": "^0.14.0",
     "react-addons-pure-render-mixin": "^0.14.0",
     "react-dom": "^0.14.0",
@@ -48,20 +52,19 @@
     "request": "^2.65.0",
     "socket.io": "^1.3.7",
     "socket.io-client": "^1.3.7",
-    "svg-injector": "^1.1.3",
-    "vinyl-source-stream": "^1.1.0"
+    "svg-injector": "^1.1.3"
   },
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-typescript": "^2.9.2",
-    "gulp-sourcemaps": "^1.6.0",
+    "browserify": "^11.2.0",
     "chai": "^3.4.0",
-    "chai-immutable": "^1.3.0",
     "chai-as-promised": "^5.1.0",
+    "chai-immutable": "^1.3.0",
     "mocha": "^2.3.3",
+    "minifyify": "^7.1.0",
+    "nodemon": "^1.8.1",
+    "npm-run-all": "^1.4.0",
     "react-proxy": "^1.1.1",
     "typescript": "^1.6.2",
-    "typescript-compiler": "^1.4.1-2",
     "watchify": "^3.4.0"
   }
 }

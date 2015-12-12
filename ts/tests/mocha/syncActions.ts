@@ -1,7 +1,6 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
 'use strict';
-require('es6-shim');
 
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Map } from 'immutable';
@@ -45,7 +44,7 @@ describe('Synchronous Actions', () => {
             resolve();
         });
 
-    });   
+    });
 
     it('ADD_BIN', () => {
         store.dispatch(actions.addBin(2, 'METAUX'));

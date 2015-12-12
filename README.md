@@ -9,6 +9,7 @@ This screen can be used to indicate other informations that is normally hard to 
 ## Instructions
 
 ### Install
+
 ```
 npm install
 npm i tsd -g
@@ -17,27 +18,26 @@ tsd install
 ```
 
 ### Build
+
 ```
-npm run build-dev
-```
-or
-```
-npm run build-prod
+npm run build
 ```
 
-You can also do
+You can also do, locally during development:
+
 ```
 npm run watch
 ```
 
 ### Run the project
+
 ```
-npm run start
+npm start
 ```
 
 ### Tests
 ```
-npm run test
+npm test
 ```
 
 ## Communication
@@ -55,5 +55,3 @@ Two actions can trigger 'request' events from client:
 6bin server and 6brain are linked via EventEmitter.
 - Server => 'measurementRequest' and 'binsRequest' events => 6brain
 - 6brain => 'data' event => Server
-
-

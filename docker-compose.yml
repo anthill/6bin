@@ -1,0 +1,16 @@
+server: &server
+  build: .
+  ports:
+      - 3000:3000
+  environment:
+      - NODE_ENV=test
+  volumes:
+      - .:/usr/6bin
+  tty: true
+
+tests:
+  <<: *server
+  command: npm test
+  links:
+      - server
+  ports:

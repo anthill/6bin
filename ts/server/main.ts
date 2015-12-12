@@ -2,8 +2,6 @@
 
 'use strict';
 
-require('es6-shim');
-
 import * as path from 'path';
 import * as util from 'util';
 import * as http from 'http';
@@ -53,7 +51,7 @@ export function BinServer(): void {
 						t: bin.type
 					};
 
-					this.emit('measurementRequest', {	
+					this.emit('measurementRequest', {
 						date: new Date(Date.now()).toISOString(),
 						value: shortBin,
 						index: data.index,
