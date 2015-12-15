@@ -69,6 +69,7 @@ interface DisplayState {
     selectedBin: string;
     error: string;
     isInit: boolean;
+    reference: string;
 }
 
 var displayState: DisplayState = {
