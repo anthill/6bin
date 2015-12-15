@@ -11,6 +11,7 @@ export interface Action {
     waste?: string;
     bin?: BinPartialData;
     bins?: Map<string, BinData>;
+    reference?: string;
     // bin?: BinData;
     delta?: BinPartialData;
     error?: string;
@@ -101,6 +102,12 @@ export const SET_INIT_MODE = 'SET_INIT_MODE';
 export function setInitMode(isInit: boolean) {
     return { type: SET_INIT_MODE, isInit};
 };
+
+export const SET_WASTE_REFERENCE = 'SET_WASTE_REFERENCE';
+export function setWasteReference(reference: string) {
+    return { type: SET_WASTE_REFERENCE, reference };
+};
+
 
 // Pending Actions
 export const ADD_PENDING_ACTION = 'ADD_PENDING_ACTION';

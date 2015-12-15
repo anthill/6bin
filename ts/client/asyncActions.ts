@@ -6,7 +6,7 @@ import { BinData } from './Components/Dumb/Bin';
 
 import makeMap from '../tools/makeMap';
 import { sendToServer } from './serverLink';
-import { getBins, setBins, Action } from './actions'; // Bin actions
+import { getBins, setBins, setWasteReference, Action } from './actions'; // Bin actions
 import { setErrorMode, setInitMode } from './actions'; // Display actions
 import { addPendingAction, deletePendingAction } from './actions'; // Pending actions
 
@@ -52,12 +52,12 @@ export function getBinsFromServer(id: number) {
         });
 
         Promise.race([sendToServerP, timeoutP])
-        .then((shortBins: any[]) => {
+        .then((received: any) => {
 
             console.log('Bins received from server');
             var bins: BinData[] = [];
 
-            shortBins.forEach((shortBin) => { // for some reason, action.bins is not a Immutable.Map anymore ...
+            received.bins.forEach((shortBin: any) => {
                 bins.push({
                     id: shortBin.id,
                     position: shortBin.p,
@@ -67,11 +67,15 @@ export function getBinsFromServer(id: number) {
             });
 
             var binMap = makeMap(bins, 'id');
+            console.log('binMap', binMap);
+            console.log('REFERENCE', received.ref);
             
             dispatch(
                 setBins(Map<string, BinData>(binMap)));
             dispatch(
                 setInitMode(false));
+            dispatch(
+                setWasteReference(received.ref))
             dispatch(
                 deletePendingAction(id));
 
@@ -81,7 +85,6 @@ export function getBinsFromServer(id: number) {
 
             dispatch(
                 setErrorMode(error));
-
             dispatch(
                 deletePendingAction(id));
         });

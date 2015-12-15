@@ -22,6 +22,7 @@ interface ReduxPropsMixin{
 
 interface BinManagerProps extends ReduxPropsMixin{
     bins: Map<string, BinProps>;
+    reference: string;
     tempBins: Map<string, BinProps>;
     pending: Map<number, Action>;
     display: Map<string, any>;
@@ -46,6 +47,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         var isAddingBins: boolean = display.get('isAddingBins');
         var isInit: boolean = display.get('isInit');
         var selectedId: string = display.get('selectedBin');
+        var reference: string = display.get('reference');
 
         var orderedBins = bins.sort((a: BinData, b: BinData) => {
             // console.log('Test', a.position, b.position, a.position > b.position);
@@ -60,6 +62,7 @@ class BinManager extends React.Component<BinManagerProps, BinManagerState> {
         // Create the bin list
         var binList = React.createElement(BinList, {
             bins: orderedBins,
+            reference,
             selectedId,
             isEditing: isEditingBins,
             isAdding: isAddingBins,

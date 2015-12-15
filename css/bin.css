@@ -54,7 +54,7 @@
 
 svg {
 	display: block; margin: 0 auto; width: auto; height: auto;
-	border-radius: 10px;
+	border-radius: 10%;
 	background-color: #FF2727;
 }
 
