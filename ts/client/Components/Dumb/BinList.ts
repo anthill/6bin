@@ -46,24 +46,22 @@ export default class BinList extends React.Component<BinListProps, BinListState>
             return React.createElement(Bin, binProps);
         }).toJS();
 
-        if (props.bins.size !== 0){
+        var addButton = React.createElement('li', {
+                key: binList.length,
+                id: 'add-bin',
+                className: [
+                    'bin',
+                    props.isAdding ? 'selected' : '',
+                    props.bins.size === 0 ? 'empty' : ''
+                ].join(' '),
+                onClick: () => {
+                    props.onAddModeActivation(!props.isAdding);
+                }
+            },
+            'Ajouter Benne'
+        );
 
-            var addButton = React.createElement('li', {
-                    key: binList.length,
-                    id: 'add-bin',
-                    className: [
-                        'bin',
-                        props.isAdding ? 'selected' : ''
-                    ].join(' '),
-                    onClick: () => {
-                        props.onAddModeActivation(!props.isAdding);
-                    }
-                },
-                'Ajouter Benne'
-            );
-
-            binList.push(addButton);
-        }
+        binList.push(addButton);
 
         return React.createElement('ul', {
                 className: [
