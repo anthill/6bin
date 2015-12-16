@@ -48,7 +48,7 @@ server.on('getBinsRequest', function(request){
             index: request.index,
             isSuccessful: true,
             data: {
-                ref: 'USTOM',
+                owner: 'USTOM',
                 bins: initialBins
             } // comment this to make the app crash on init
         });

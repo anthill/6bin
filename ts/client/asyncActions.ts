@@ -68,14 +68,14 @@ export function getBinsFromServer(id: number) {
 
             var binMap = makeMap(bins, 'id');
             console.log('binMap', binMap);
-            console.log('REFERENCE', received.ref);
+            console.log('REFERENCE', received.owner);
             
             dispatch(
                 setBins(Map<string, BinData>(binMap)));
             dispatch(
                 setInitMode(false));
             dispatch(
-                setWasteReference(received.ref))
+                setWasteReference(received.owner))
             dispatch(
                 deletePendingAction(id));
 
