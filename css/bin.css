@@ -67,6 +67,10 @@ svg {
 	background-color: #FF2727;
 }
 
+svg path{
+	stroke: black;
+}
+
 .bin.available svg{
 	background-color: #28D628;
 }

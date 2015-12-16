@@ -12,7 +12,7 @@
 }
 
 #delete-button {
-	display: block; padding: .5rem 1.1rem; margin: 0 auto; margin-top: 2rem; width: 8rem;
+	display: block; padding: .5rem 1.1rem; margin: 0 auto; margin-top: 1.5rem; width: 8rem;
 	border: 1px solid black; border-radius: 5px;
 	background-color: #EEE;
 	font-size: .8rem; color: #E00; text-align: center;
@@ -55,10 +55,6 @@
 
 #editor > ul.new > div{
 	left: 0;
-}
-
-#editor > ul > div li{
-	justify-content: center;
 }
 
 #editor > ul > div:first-child li{
