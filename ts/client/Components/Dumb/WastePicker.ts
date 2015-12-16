@@ -5,9 +5,14 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import * as SVGComponent from 'react-inlinesvg';
 import { BinPartialData } from './Bin';
-import { binDico } from '../../binTypes';
+import makeMap from '../../../tools/makeMap';
+
+import * as binDico from 'waste-categories';
+
+console.log('binDico', binDico);
 
 interface WastePickerProps{
+    reference: string;
     type: string;
     onWasteSelection: (delta: BinPartialData) => void;
 }
@@ -63,22 +68,26 @@ export default class WastePicker extends React.Component<WastePickerProps, Waste
         var props = this.props;
 
         // create the binPicker buttons
-        var bins = binDico.map((url: string, type: string) => {
-            return React.createElement('li', {
-                    key: type,
-                    className: [
-                        'bin',
-                        props.type === undefined || props.type === type ? '' : 'current',
-                    ].join(' '),
-                    onClick: (event: any) => {
-                        console.log('CLICK');
-                        props.onWasteSelection(type);
-                    }
-                },
-                React.createElement(SVGComponent, {src: url}),
-                React.createElement('div', {}, type.toLowerCase())
-            )
-        });
+        var bins: BinPartialData[] = [];
+        
+        if (props.reference){
+            makeMap(binDico[props.reference], 'type').forEach((item: any) => {
+                bins.push(React.createElement('li', {
+                        key: item.type,
+                        className: [
+                            'bin',
+                            props.type === undefined || props.type === item.type ? '' : 'current',
+                        ].join(' '),
+                        onClick: (event: any) => {
+                            console.log('CLICK');
+                            props.onWasteSelection(item.type);
+                        }
+                    },
+                    React.createElement(SVGComponent, {src: item.path}),
+                    React.createElement('div', {}, item.type.toLowerCase())
+                ));
+            });
+        }
         
         return React.createElement('div', {
                 ref: 'wastelist',
@@ -86,7 +95,7 @@ export default class WastePicker extends React.Component<WastePickerProps, Waste
             },
             'Type de déchets',
             React.createElement('ul', {className: 'bins'},
-                bins.toList()
+                bins
             )
         );
     }

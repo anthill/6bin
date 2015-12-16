@@ -30,6 +30,15 @@
 	transition: right .5s, bottom .5s;
 }
 
+#add-bin.empty{
+	right: 0; bottom: 0;
+	display: none;
+}
+
+.edit #add-bin.empty {
+	display: flex;
+}
+
 .edit .bins li.selected {
 	box-shadow: 3px 5px 5px #444;
 }
@@ -54,8 +63,12 @@
 
 svg {
 	display: block; margin: 0 auto; width: auto; height: auto;
-	border-radius: 10px;
+	border-radius: 10%;
 	background-color: #FF2727;
+}
+
+svg path{
+	stroke: black;
 }
 
 .bin.available svg{

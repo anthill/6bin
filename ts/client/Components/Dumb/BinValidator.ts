@@ -7,8 +7,9 @@ import Bin from '../Dumb/Bin';
 import { BinData, BinPartialData } from '../Dumb/Bin';
 
 export interface BinValidatorProps{
-    selectedBin: BinData,
-    modifiedBin: BinData,
+    reference: string;
+    selectedBin: BinData;
+    modifiedBin: BinData;
     onCancelation: (id: string) => void;
     onValidation: (id: string) => void;
 }
@@ -26,6 +27,7 @@ export default class BinValidator extends React.Component<BinValidatorProps, Bin
         // The current Bin the user is modifying / creating
         var currentBin = props.selectedBin ? 
             React.createElement(Bin, Object.assign({}, props.selectedBin, {
+                reference: props.reference,
                 isSelected: true,
                 isEditing: true,
                 isBinPanelOpen: true,
@@ -43,6 +45,7 @@ export default class BinValidator extends React.Component<BinValidatorProps, Bin
 
         var modifiedBin = isNew ?
             React.createElement(Bin, Object.assign({}, props.modifiedBin, {
+                reference: props.reference,
                 isSelected: true,
                 isEditing: true,
                 isBinPanelOpen: true,

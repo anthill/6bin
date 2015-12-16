@@ -5,7 +5,6 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import * as SVGComponent from 'react-inlinesvg';
 import { OrderedSet } from 'immutable';
 
-import { binDico } from '../../binTypes';
 import { BinPartialData } from './Bin';
 
 import range from '../../../tools/range';

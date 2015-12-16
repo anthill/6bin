@@ -56,9 +56,11 @@ class BinPanel extends React.Component<BinPanelProps, BinPanelState> {
         var isAddingBins: boolean = display.get('isAddingBins');
         var isEditingBins: boolean = display.get('isEditingBins');
         var selectedId: string = display.get('selectedBin');
+        var reference: string = display.get('reference');
         var selectedBin: BinData = bins.get(selectedId);
 
         var binValidator = React.createElement(BinValidator, {
+            reference,
             selectedBin: selectedBin,
             modifiedBin: state.modifiedBin,
             onCancelation: () => { // unselect bin, close BinPanel and disable AddMode
@@ -141,6 +143,7 @@ class BinPanel extends React.Component<BinPanelProps, BinPanelState> {
 
         // Create the list with all bin types
         var wastePicker = React.createElement(WastePicker, {
+            reference,
             type: state.modifiedBin ? state.modifiedBin.type : undefined,
             onWasteSelection: (type: string) => {
                 this.setState({

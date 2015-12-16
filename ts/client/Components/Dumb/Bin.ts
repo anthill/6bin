@@ -6,8 +6,9 @@ import { Map } from 'immutable';
 
 import * as SVGComponent from 'react-inlinesvg';
 
+import makeMap from '../../../tools/makeMap';
 // import SVGComponent from './SVG';
-import { binDico } from '../../binTypes'
+import * as binDico from 'waste-categories';
 
 export interface BinData {
     id: string; // separating id from position is relevant because you might have bin without associated position
@@ -25,6 +26,7 @@ export interface BinPartialData {
 
 export interface BinProps extends BinData{
     // isPending: boolean;
+    reference: string;
     isEditing: boolean;
     isSelected: boolean;
     isBinPanelOpen: boolean;
@@ -43,13 +45,18 @@ export default class Bin extends React.Component<BinProps, BinState> {
 
         var props = this.props;
 
-        var imageURL = binDico.get(props.type);
+        var imageURL: string;
+        var mySVG: any;
 
-        var mySVG = React.createElement(SVGComponent, {
-                key: props.type,
-                src: imageURL
-            }
-        );
+        if (props.reference){
+            imageURL = makeMap(binDico[props.reference], 'type').get(props.type).path;
+
+            mySVG = React.createElement(SVGComponent, {
+                    key: props.type,
+                    src: imageURL
+                }
+            );
+        }
         
         return React.createElement('li', 
             {
