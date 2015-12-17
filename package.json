@@ -1,6 +1,6 @@
 {
   "name": "6bin",
-  "version": "1.2.11",
+  "version": "1.2.12",
   "description": "User interface for 6element sensors",
   "main": "./js/server/main.js",
   "scripts": {
