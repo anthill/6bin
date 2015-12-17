@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, '..', '..')));
-app.use('/node_modules/waste-categories', express.static(path.join(__dirname, '..', 'node_modules', 'waste-categories')));
+app.use('/node_modules/waste-categories', express.static(path.resolve(path.join(__dirname, '..', '..', '..', 'waste-categories'))));
 
 export function BinServer(): void {
 	EventEmitter.call(this);
