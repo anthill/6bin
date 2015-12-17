@@ -26,7 +26,7 @@ socket.on('response', (response: any) => {
     if (response.isSuccessful)
         myPromise.resolve(response.data);
     else
-        myPromise.reject();
+        myPromise.reject(response.error);
 });
 
 export function sendToServer(action: Action) {
