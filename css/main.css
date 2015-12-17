@@ -62,3 +62,15 @@ body {
 #footer {
 	position: absolute; height: 10vh; bottom: 0; right: 0; left: 0;
 }
+
+#error {
+	text-align: center;
+	margin-top: 8rem;
+}
+
+#refresh {
+	display: inline-block; width: 10rem; padding: 2rem 3rem; margin: 8rem auto;
+    border: 2px solid black; border-radius: 20px;
+    text-align: center; font-size: 2rem;
+    background-color: #BBB;
+}

@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Map } from 'immutable';
 
+import { getBinsFromServer } from '../../asyncActions';
 import { State, Action } from '../../actions';
 import BinManager from '../Smart/BinManager';
 import BinPanel from '../Smart/BinPanel';
@@ -53,6 +54,7 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
         var panel: ReactElement<any>;
         var footer: ReactElement<any>;
         var errorMsg: ReactElement<any>;
+        var refreshButton: ReactElement<any>;
 
         if (!error){
             manager = React.createElement('div', {id: 'manager', className: isEditingBins ? 'edit' : ''},
@@ -65,10 +67,21 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
                 infos
             );
         }
-        else
+        else {
             errorMsg = React.createElement('div', {id: 'error'},
                 'Le capteur ne s\'est pas initialisé correctement'
             );
+
+            refreshButton = React.createElement('div', {
+                    id: 'refresh',
+                    onClick: () => {
+                        dispatch(getBinsFromServer(0));
+                    }
+                },
+                'Réessayer'
+            );
+        }
+            
 
         return React.createElement('div', {
                 id: 'app',
@@ -80,7 +93,8 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
             manager,
             panel,
             footer,
-            errorMsg
+            errorMsg,
+            refreshButton
         );
     }
 };

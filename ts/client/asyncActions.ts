@@ -10,6 +10,8 @@ import { getBins, setBins, setWasteReference, Action } from './actions'; // Bin 
 import { setErrorMode, setInitMode } from './actions'; // Display actions
 import { addPendingAction, deletePendingAction } from './actions'; // Pending actions
 
+import * as binDico from 'waste-categories';
+
 export function sendData(action: Action, id: number, after?: Action[]) {
 
     return function (dispatch: any) {
@@ -43,6 +45,10 @@ export function getBinsFromServer(id: number) {
 
         dispatch(
             addPendingAction(id, action));
+        dispatch(
+            setInitMode(true));
+        dispatch(
+            setErrorMode(false));
 
         var sendToServerP = sendToServer(action);
         var timeoutP = new Promise(function(resolve, reject){
@@ -69,6 +75,11 @@ export function getBinsFromServer(id: number) {
             var binMap = makeMap(bins, 'id');
             console.log('binMap', binMap);
             console.log('REFERENCE', received.owner);
+
+            if (Object.keys(binDico).indexOf(received.owner) === -1){
+                console.log('Owner not known');
+                received.owner = 'ADEME';
+            }
             
             dispatch(
                 setBins(Map<string, BinData>(binMap)));

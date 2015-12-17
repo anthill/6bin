@@ -48,9 +48,9 @@ server.on('getBinsRequest', function(request){
             index: request.index,
             isSuccessful: true,
             data: {
-                owner: 'USTOM',
+                owner: 'Sinoe',
                 bins: initialBins
             } // comment this to make the app crash on init
         });
-    }, 2000);
+    }, 1000);
 });
