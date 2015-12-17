@@ -72,7 +72,7 @@
 
 #editor .bins {
 	position: relative;
-	z-index: 1; overflow-y: scroll; overflow-x: hidden;
+	z-index: 1; overflow-y: hidden; overflow-x: hidden;
 }
 
 #editor .bins li {
