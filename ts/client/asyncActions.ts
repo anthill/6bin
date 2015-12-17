@@ -43,6 +43,10 @@ export function getBinsFromServer(id: number) {
 
         dispatch(
             addPendingAction(id, action));
+        dispatch(
+            setInitMode(true));
+        dispatch(
+            setErrorMode(false));
 
         var sendToServerP = sendToServer(action);
         var timeoutP = new Promise(function(resolve, reject){
