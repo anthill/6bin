@@ -66,7 +66,7 @@ export default class BinList extends React.Component<BinListProps, BinListState>
         return React.createElement('ul', {
                 className: [
                     'bins',
-                    (binList.length - 1) % 9 === 0 ? 'completeLine' : '' // for when the last bin completes the line
+                    (binList.length - 1) % 7 === 0 ? 'completeLine' : '' // for when the last bin completes the line
                 ].join(' ')
             },
             binList
