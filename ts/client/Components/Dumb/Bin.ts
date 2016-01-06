@@ -56,6 +56,9 @@ export default class Bin extends React.Component<BinProps, BinState> {
                     src: imageURL
                 }
             );
+
+            console.log('SVG', SVGComponent);
+            console.log('mySVG', mySVG);
         }
         
         return React.createElement('li', 

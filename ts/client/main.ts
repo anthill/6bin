@@ -18,7 +18,7 @@ import { BinData } from './Components/Dumb/Bin';
 
 var createStoreWithMiddleware = applyMiddleware(
 	logger,
-	thunk
+	<any>thunk // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/6231
 )(createStore);
 var store = createStoreWithMiddleware(reducers);
 

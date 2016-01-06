@@ -4,7 +4,7 @@ import * as React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import Bin from '../Dumb/Bin';
-import { BinData, BinPartialData } from '../Dumb/Bin';
+import { BinData } from '../Dumb/Bin';
 
 export interface BinValidatorProps{
     reference: string;

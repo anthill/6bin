@@ -12,7 +12,7 @@ import WastePicker from '../Dumb/WastePicker';
 import PositionPicker from '../Dumb/PositionPicker';
 import Bin from '../Dumb/Bin';
 import BinValidator from '../Dumb/BinValidator';
-import { BinData, BinPartialData } from '../Dumb/Bin';
+import { BinData } from '../Dumb/Bin';
 import { State, Action } from '../../actions';
 import { addBin, deleteBin, updateBin, selectBin } from '../../actions'; // Bin actions
 import { openBinPanel, setBinAddMode } from '../../actions'; // Display actions
