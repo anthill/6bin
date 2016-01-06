@@ -59,6 +59,7 @@ function tscDev(){
         .pipe(sourcemaps.init())
         .pipe(ts({
             noImplicitAny: true,
+            suppressImplicitAnyIndexErrors: true,
             target: 'ES5',
             module: 'commonjs'
         }))
@@ -71,6 +72,7 @@ function tscProd(){ // doesn't generate sourcemaps
     return gulp.src(join('.', 'ts', '**/*.ts'))
         .pipe(ts({
             noImplicitAny: true,
+            suppressImplicitAnyIndexErrors: true,
             target: 'ES5',
             module: 'commonjs'
         }))
