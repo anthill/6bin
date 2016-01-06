@@ -8,7 +8,7 @@
     "build:prod": "npm-run-all --parallel source:prod share",
     "build:dev": "npm-run-all --parallel source:dev share",
     "share": "browserify -e ./js/client/main.js -o browserify-bundle.js",
-    "source:dev": "tsc ./ts/**/*.ts --noImplicitAny --suppressImplicitAnyIndexErrors -t ES5 -m commonjs --sourceMap --sourceRoot sourceMaps --outDir ./js",
+    "source:dev": "tsc ./ts/**/*.ts --noImplicitAny --suppressImplicitAnyIndexErrors -t ES5 -m commonjs --sourceMap --outDir ./js",
     "source:prod": "tsc ./ts/**/*.ts --noImplicitAny --suppressImplicitAnyIndexErrors -t ES5 -m commonjs --outDir ./js",
     "watch": "npm-run-all --parallel 'watch:*'",
     "watch:shared": "watchify -dv --full-paths -e ./js/client/main.js -o browserify-bundle.js",
