@@ -1,10 +1,11 @@
 {
   "name": "6bin",
-  "version": "1.2.17",
+  "version": "1.3.0",
   "description": "User interface for 6element sensors",
   "main": "./js/server/main.js",
   "scripts": {
-    "prepublish": "npm run build:prod",
+    "prepublish": "npm run source:prod",
+    "postinstall": "npm run share",
     "build:prod": "npm-run-all --parallel source:prod share",
     "build:dev": "npm-run-all --parallel source:dev share",
     "share": "browserify -e ./js/client/main.js -o browserify-bundle.js",
