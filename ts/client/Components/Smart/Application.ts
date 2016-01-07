@@ -19,18 +19,44 @@ interface ReduxPropsMixin{
 interface ApplicationProps extends ReduxPropsMixin{
     display: Map<string, any>;
     pending: Map<number, Action>;
+    retryTimeout: number;
 }
 
-interface ApplicationState{}
+interface ApplicationState{
+    secondsRemaining: number;
+}
 
 class Application extends React.Component<ApplicationProps, ApplicationState> {
     mixins = [PureRenderMixin]
 
+    constructor(props: ApplicationProps) { // equivalent to getInitialState()
+        super(props);
+        this.state = { secondsRemaining: 0 };
+    }
+
+    setRetryTimeout() {
+
+        this.setState({
+            secondsRemaining: this.props.retryTimeout
+        }); 
+
+        const countdown = setInterval(() => {
+            
+            this.setState({
+                secondsRemaining: this.state.secondsRemaining - 1
+            });
+            console.log('Timeout', this.state.secondsRemaining);
+            if (this.state.secondsRemaining === 0)
+                clearInterval(countdown);
+        }, 1000);        
+    }
+
     render() {
 
         const { dispatch, pending, display } = this.props;
+        const { secondsRemaining } = this.state;
 
-        var isBinPanelOpen: boolean = display.get('isBinPanelOpen');
+        let isBinPanelOpen: boolean = display.get('isBinPanelOpen');
         var isAddingBin: boolean = display.get('isAddingBin');
         var isEditingBins: boolean = display.get('isEditingBins');
         var error: string = display.get('error');
@@ -74,11 +100,12 @@ class Application extends React.Component<ApplicationProps, ApplicationState> {
 
             refreshButton = React.createElement('div', {
                     id: 'refresh',
-                    onClick: () => {
-                        dispatch(getBinsFromServer(0));
-                    }
+                    onClick: secondsRemaining === 0 ? () => {
+                        this.setRetryTimeout()
+                        dispatch(getBinsFromServer(0));           
+                    } : undefined
                 },
-                'Réessayer'
+                secondsRemaining > 0 ? 'Patientez ' + secondsRemaining  : 'Réessayer' 
             );
         }
             

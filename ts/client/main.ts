@@ -24,7 +24,7 @@ var store = createStoreWithMiddleware(reducers);
 
 render(React.createElement(Provider, {store},
     React.createElement(
-        Application // the Application component is just a wrapper of several smart components
+        Application, {retryTimeout: 10} // the Application component is just a wrapper of several smart components
     )), 
 	document.getElementById('sixbin')
 );

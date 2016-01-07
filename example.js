@@ -55,15 +55,24 @@ server.on('getBinsRequest', function(request){
     var self = this;
 
     console.log('msg received', request);
+    // setTimeout(function(){
+    //     console.log('emitting');
+    //     self.emit('6bin', {
+    //         index: request.index,
+    //         isSuccessful: true,
+    //         data: {
+    //             owner: 'Agglo_Pau',
+    //             bins: initialBins
+    //         } // comment this to make the app crash on init
+    //     });
+    // }, 5000);
+
     setTimeout(function(){
         console.log('emitting');
         self.emit('6bin', {
             index: request.index,
-            isSuccessful: true,
-            data: {
-                owner: 'Agglo_Pau',
-                bins: initialBins
-            } // comment this to make the app crash on init
+            isSuccessful: false,
+            error: 'An error occured'
         });
-    }, 1000);
+    }, 10);
 });
