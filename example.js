@@ -3,9 +3,9 @@
 var Map = require('immutable').Map;
 var BinServer = require('./js/server/main.js').BinServer;
 
-var server = new BinServer();
+var server = new BinServer(__dirname);
 
-server.start();
+server.start(3000);
 
 var initialBins = [
     {"id":"Cartons_1","p":15,"a":true,"t":"Cartons"},
@@ -55,24 +55,24 @@ server.on('getBinsRequest', function(request){
     var self = this;
 
     console.log('msg received', request);
-    // setTimeout(function(){
-    //     console.log('emitting');
-    //     self.emit('6bin', {
-    //         index: request.index,
-    //         isSuccessful: true,
-    //         data: {
-    //             owner: 'Agglo_Pau',
-    //             bins: initialBins
-    //         } // comment this to make the app crash on init
-    //     });
-    // }, 5000);
-
     setTimeout(function(){
         console.log('emitting');
         self.emit('6bin', {
             index: request.index,
-            isSuccessful: false,
-            error: 'An error occured'
+            isSuccessful: true,
+            data: {
+                owner: 'Agglo_Pau',
+                bins: initialBins
+            } // comment this to make the app crash on init
         });
-    }, 10);
+    }, 1000);
+
+    // setTimeout(function(){
+    //     console.log('emitting');
+    //     self.emit('6bin', {
+    //         index: request.index,
+    //         isSuccessful: false,
+    //         error: 'An error occured'
+    //     });
+    // }, 10);
 });

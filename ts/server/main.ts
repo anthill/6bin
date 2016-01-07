@@ -17,110 +17,112 @@ import * as socketIO from 'socket.io';
 import { Action, actionsToBeSent as authorizedActions } from '../client/actions';
 import { Request } from '../client/serverLink';
 
-import { PORT } from './PORT';
-
 import { List, Map } from 'immutable';
 
-var app = express();
+export class BinServer extends EventEmitter {
+	private server: any
 
-app.use(compression());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+	constructor(serverPath: string) {
 
-app.use(express.static(path.join(__dirname, '..', '..')));
-app.use('/node_modules/waste-categories', express.static(path.resolve(path.join(__dirname, '..', '..', '..', 'waste-categories'))));
+		super();
 
-export function BinServer(): void {
-	EventEmitter.call(this);
+		var app = express();
 
-	var server = http.createServer(app);
-	var io = socketIO(server);
+		app.use(compression());
+		app.use(bodyParser.urlencoded({ extended: true }));
+		app.use(bodyParser.json());
 
-	io.on('connection', (socket: any) => {
-		// This is just a bridge to make the data go from 6bin client to 6brain
-		socket.on('request', (data: Request) => {
+		app.use(express.static(serverPath));
 
-			switch(data.action.type){
-				case 'UPDATE_BIN': // only when availability changes
-					console.log(data.action.type, 'is valid, => 6brain');
+		this.server = http.createServer(app);
+		var io = socketIO(this.server);
 
-					var bin = data.action.bin;
+		io.on('connection', (socket: any) => {
+			// This is just a bridge to make the data go from 6bin client to 6brain
+			socket.on('request', (data: Request) => {
 
-					var shortBin: any = {
-						id: bin.id,
-						p: bin.position,
-						a: bin.isAvailable,
-						t: bin.type
-					};
+				switch (data.action.type) {
+					case 'UPDATE_BIN': // only when availability changes
+						console.log(data.action.type, 'is valid, => 6brain');
 
-					this.emit('measurementRequest', {	
-						date: new Date(Date.now()).toISOString(),
-						value: shortBin,
-						index: data.index,
-						origin: '6bin'
-					});
-					break;
+						var bin = data.action.bin;
 
-				case 'SET_BINS':
-					console.log(data.action.type, 'is valid, => 6brain');
-
-					// shortening bin info
-					var shortBins: any[] = [];
-					Map(data.action.bins).forEach((bin) => { // for some reason, action.bins is not a Immutable.Map anymore ...
-						shortBins.push({
+						var shortBin: any = {
 							id: bin.id,
 							p: bin.position,
 							a: bin.isAvailable,
 							t: bin.type
+						};
+
+						this.emit('measurementRequest', {
+							date: new Date(Date.now()).toISOString(),
+							value: shortBin,
+							index: data.index,
+							origin: '6bin'
 						});
-					});
+						break;
 
-					this.emit('setBinsRequest', {
-						bins: shortBins,
-						index: data.index,
-						origin: '6bin'
-					});
-					break;
+					case 'SET_BINS':
+						console.log(data.action.type, 'is valid, => 6brain');
 
-				case 'GET_BINS':
-					console.log(data.action.type, 'is valid, => 6brain');
-					this.emit('getBinsRequest', {
-						index: data.index,
-						origin: '6bin'
-					});
-					break;
+						// shortening bin info
+						var shortBins: any[] = [];
+						Map(data.action.bins).forEach((bin) => { // for some reason, action.bins is not a Immutable.Map anymore ...
+							shortBins.push({
+								id: bin.id,
+								p: bin.position,
+								a: bin.isAvailable,
+								t: bin.type
+							});
+						});
+
+						this.emit('setBinsRequest', {
+							bins: shortBins,
+							index: data.index,
+							origin: '6bin'
+						});
+						break;
+
+					case 'GET_BINS':
+						console.log(data.action.type, 'is valid, => 6brain');
+						this.emit('getBinsRequest', {
+							index: data.index,
+							origin: '6bin'
+						});
+						break;
 
 
-				default:
-					console.log(data.action.type, 'is not valid');
+					default:
+						console.log(data.action.type, 'is not valid');
 
+				}
+
+			});
+
+			function transferToClient(response: any) {
+				console.log('transfering from main.ts');
+				socket.emit('response', response);
 			}
 
+			socket.on('disconnect', () => {
+				this.removeListener('6bin', transferToClient);
+			});
+
+			this.on('6bin', transferToClient);
 		});
+	}
 
-		function transferToClient(response: any) {
-			console.log('transfering from main.ts');
-			socket.emit('response', response);
-		}
-
-		socket.on('disconnect', () => {
-			this.removeListener('6bin', transferToClient);
-		});
-
-		this.on('6bin', transferToClient);
-	});
-
-	this.start = function(){
-		server.listen(PORT, function () {
+	start(port: number){
+		this.server.listen(port, function () {
 		    console.log('Server running on', [
 		        'http://localhost:',
-		        PORT
+		        port
 		    ].join(''));
 		});
 	};
 
-	this.stop = function(){
-		server.close();
+	stop(){
+		this.server.close();
 	};
 }
 
@@ -129,4 +131,4 @@ process.on('uncaughtException', function(e: Error){
     process.exit();
 });
 
-util.inherits(BinServer, EventEmitter);
+// util.inherits(BinServer, EventEmitter);
