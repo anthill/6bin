@@ -32,7 +32,10 @@ export class BinServer extends EventEmitter {
 		app.use(bodyParser.urlencoded({ extended: true }));
 		app.use(bodyParser.json());
 
-		app.use(express.static(serverPath));
+		app.use('/', express.static(serverPath));
+		// hack to access /../waste-categories in the case of flat dependencies
+		app.use('/waste-categories', express.static(path.resolve(path.join(serverPath, '..', 'waste-categories'))));
+
 
 		this.server = http.createServer(app);
 		var io = socketIO(this.server);
