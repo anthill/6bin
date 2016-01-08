@@ -6,14 +6,14 @@ require('es6-shim');
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Map } from 'immutable';
 
-import * as actions from '../../client/actions';
+import { addBin, setBins } from '../../client/actions';
 import reducers from '../../client/reducers';
 import { logger } from '../../client/middleware';
 import BinManager from '../../client/Components/Smart/BinManager';
 import { BinData } from '../../client/Components/Dumb/Bin';
 
 import * as chai from 'chai';
-import * as chaiAsPromised from 'chai-as-promised';
+import chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 
 var expect = chai.expect;
@@ -37,7 +37,7 @@ describe('Synchronous Actions', () => {
             METAUX_1: { id: 'METAUX_1', position: 5, type: 'Metaux', isAvailable: true }
         });
 
-        store.dispatch(actions.setBins(bins));
+        store.dispatch(setBins(bins));
 
         return new Promise((resolve, reject) => {
             var binsInStore = store.getState().bins;
@@ -48,7 +48,9 @@ describe('Synchronous Actions', () => {
     });   
 
     it('ADD_BIN', () => {
-        store.dispatch(actions.addBin(2, 'METAUX'));
+        var newBin = { id: 'METAUX_2', position: 6, type: 'Metaux', isAvailable: true };
+
+        store.dispatch(addBin(newBin));
 
         return new Promise((resolve, reject) => {
             var binsInStore = store.getState().bins;

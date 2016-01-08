@@ -2,7 +2,8 @@ js
 browserify-bundle.js
 *.js.map
 
-typings/
+typings/*
+!typings/tsd.d.ts
 
 
 ###### added by default by Git

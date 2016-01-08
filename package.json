@@ -1,14 +1,21 @@
 {
   "name": "6bin",
-  "version": "1.2.16",
+  "version": "1.3.2",
   "description": "User interface for 6element sensors",
   "main": "./js/server/main.js",
   "scripts": {
-    "prepublish": "node_modules/gulp/bin/gulp.js build-prod",
-    "build-dev": "node_modules/gulp/bin/gulp.js build-dev",
-    "build-prod": "node_modules/gulp/bin/gulp.js build-prod",
-    "watch": "node_modules/gulp/bin/gulp.js watch",
-    "start": "nodemon example.js",
+    "prepublish": "npm run source:prod",
+    "postinstall": "npm run share",
+    "build:prod": "npm-run-all --parallel source:prod share",
+    "build:dev": "npm-run-all --parallel source:dev share",
+    "share": "browserify -e ./js/client/main.js -o browserify-bundle.js",
+    "source:dev": "tsc ./ts/**/*.ts --noImplicitAny --suppressImplicitAnyIndexErrors -t ES5 -m commonjs --sourceMap --outDir ./js",
+    "source:prod": "tsc ./ts/**/*.ts --noImplicitAny --suppressImplicitAnyIndexErrors -t ES5 -m commonjs --outDir ./js",
+    "watch": "npm-run-all --parallel 'watch:*'",
+    "watch:shared": "watchify -dv --full-paths -e ./js/client/main.js -o browserify-bundle.js",
+    "watch:source": "tsc ./ts/**/*.ts --watch --noImplicitAny --suppressImplicitAnyIndexErrors -t ES5 -m commonjs --sourceMap --sourceRoot sourceMaps --outDir ./js",
+    "start": "node example.js",
+    "start:watch": "nodemon --delay 500ms example.js",
     "test": "mocha --recursive tests/js/mocha/"
   },
   "repository": {
@@ -38,6 +45,7 @@
     "immutable": "^3.7.5",
     "keymirror": "^0.1.1",
     "minifyify": "^7.1.0",
+    "npm-run-all": "^1.4.0",
     "react": "^0.14.0",
     "react-addons-pure-render-mixin": "^0.14.0",
     "react-dom": "^0.14.0",
@@ -53,9 +61,6 @@
     "waste-categories": "^1.0.4"
   },
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-typescript": "^2.9.2",
-    "gulp-sourcemaps": "^1.6.0",
     "chai": "^3.4.0",
     "chai-immutable": "^1.3.0",
     "chai-as-promised": "^5.1.0",

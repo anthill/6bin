@@ -1,6 +1,6 @@
 .bin {
 	display: flex; flex-direction: column; justify-content: flex-start;
-	margin: .5rem; height: 5rem; width: 4rem; padding: .2rem; position: relative;
+	margin: .7rem; height: 6rem; width: 5rem; padding: .2rem; position: relative;
 	border-radius: 10px; box-shadow: 3px 5px 5px #444;
 	background-color: #EEE;
 	text-align: center; text-transform: capitalize; font-size: .8rem; text-transform: capitalize;
@@ -23,7 +23,7 @@
 }
 
 #add-bin {
-	position: relative; right: 5.4rem;
+	position: relative; right: 6.8rem;
 	justify-content: center;
 	z-index: 0;
 	box-shadow: none;
@@ -44,7 +44,7 @@
 }
 
 .completeLine #add-bin {
-	right: 0; bottom: 6.4rem;
+	right: 0; bottom: 7.7rem;
 }
 
 .edit #add-bin {

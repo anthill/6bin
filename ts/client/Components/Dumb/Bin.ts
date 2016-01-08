@@ -49,13 +49,24 @@ export default class Bin extends React.Component<BinProps, BinState> {
         var mySVG: any;
 
         if (props.reference){
-            imageURL = makeMap(binDico[props.reference], 'type').get(props.type).path;
+            
+            try{
+                var waste = makeMap(binDico[props.reference], 'type').get(props.type);
 
-            mySVG = React.createElement(SVGComponent, {
-                    key: props.type,
-                    src: imageURL
+                if (waste) {
+                    imageURL = waste.path;
+
+                    mySVG = React.createElement(SVGComponent, {
+                        key: props.type,
+                        src: imageURL
+                    }
+                    );
                 }
-            );
+            }
+            catch(error){
+                console.log('Unknown bin type in reference');
+            }
+            
         }
         
         return React.createElement('li', 

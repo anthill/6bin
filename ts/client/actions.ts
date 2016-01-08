@@ -9,11 +9,9 @@ export interface Action {
     type: string;
     position?: number;
     waste?: string;
-    bin?: BinPartialData;
+    bin?: BinData;
     bins?: Map<string, BinData>;
     reference?: string;
-    // bin?: BinData;
-    delta?: BinPartialData;
     error?: string;
     index?: number;
     id?: string;
@@ -50,7 +48,7 @@ export function addBin(bin: BinData) {
 };
 
 export const UPDATE_BIN = 'UPDATE_BIN'; // can be sent
-export function updateBin(id: string, bin: BinPartialData) {
+export function updateBin(id: string, bin: BinData) {
     return { type: UPDATE_BIN, id, bin };
 };
 
@@ -94,7 +92,7 @@ export function openBinPanel(isBinPanelOpen: boolean) {
 };
 
 export const SET_ERROR_MODE = 'SET_ERROR_MODE';
-export function setErrorMode(error: string) {
+export function setErrorMode(error: string | boolean) {
     return { type: SET_ERROR_MODE, error};
 };
 

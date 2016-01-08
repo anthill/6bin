@@ -9,7 +9,7 @@ import { Map, List } from 'immutable';
 
 import BinList from '../Dumb/BinList';
 import WastePicker from '../Dumb/WastePicker';
-import { BinData, BinPartialData, BinProps } from '../Dumb/Bin';
+import { BinData, BinProps } from '../Dumb/Bin';
 import { State, Action } from '../../actions';
 import { sendData } from '../../asyncActions'; // async Actions
 import { setBins, updateBin } from '../../actions'; // Bin actions
